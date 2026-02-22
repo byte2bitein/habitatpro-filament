@@ -2,6 +2,7 @@
 
 use App\Models\Team;
 use App\Models\User;
+use App\Enums\SocietyType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,6 +17,14 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('slug');
+            $table->string('address');
+            $table->decimal('longitude', 10, 8)->nullable();
+            $table->decimal('latitude', 10, 8)->nullable();
+            $table->string('logo')->nullable();
+            $table->string('contact_number')->nullable();
+            $table->string('contact_email')->nullable();
+            $table->string('contact_name')->nullable();
+            $table->enum('society_type', SocietyType::cases())->default(SocietyType::RESIDENTIAL_APARTMENTS);
             $table->timestamps();
         });
 

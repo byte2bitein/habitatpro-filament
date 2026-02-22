@@ -14,8 +14,8 @@ class FilamentDataSeeder extends Seeder
     public function run(): void
     {
         $tenants = [
-            ['name' => 'Tenant 1', 'slug' => 'tenant-1'],
-            ['name' => 'Tenant 2', 'slug' => 'tenant-2'],
+            ['name' => 'Sanskaruti Signius', 'slug' => 'sanskaruti-signius'],
+            ['name' => 'Krishna Kunj', 'slug' => 'krishna-kunj'],
         ];
         foreach ($tenants as $tenant) {
             Tenant::create($tenant);
