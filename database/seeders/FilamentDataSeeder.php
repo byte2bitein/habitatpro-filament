@@ -91,6 +91,13 @@ class FilamentDataSeeder extends Seeder
             ['name' => 'Edit Permission', 'code' => 'update_permission'],
             ['name' => 'Delete Permission', 'code' => 'delete_permission'],
             ['name' => 'View Permission', 'code' => 'view_permission'],
+
+            ['name' => 'View building', 'code' => 'view_building'],
+            ['name' => 'Create building', 'code' => 'create_building'],
+            ['name' => 'Update building', 'code' => 'update_building'],
+            ['name' => 'Delete building', 'code' => 'delete_building'],
+            ['name' => 'Restore building', 'code' => 'restore_building'],
+            ['name' => 'Force delete building', 'code' => 'force_delete_building'],
         ];
     }
 
@@ -108,18 +115,25 @@ class FilamentDataSeeder extends Seeder
                     'view_role',
                     'attach_role',
                     'detach_role',
+                    'view_building',
+                    'create_building',
+                    'update_building',
+                    'delete_building',
+                    'restore_building',
+                    'force_delete_building',
                 ],
             ],
             [
                 'role' => 'editor',
                 'permissions' => [
-                    // TODO
+                    'view_building',
                 ],
             ],
             [
                 'role' => 'viewer',
                 'permissions' => [
                     'view_user',
+                    'view_building',
                 ],
             ],
         ];

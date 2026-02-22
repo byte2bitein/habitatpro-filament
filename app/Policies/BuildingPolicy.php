@@ -4,7 +4,7 @@ namespace App\Policies;
 
 use App\Models\Building;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
+use Filament\Facades\Filament;
 
 class BuildingPolicy
 {
@@ -13,7 +13,7 @@ class BuildingPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->isSuperAdmin() || ($user->canAccessTenant(Filament::getTenant()) && $user->hasPermission('view_building'));
     }
 
     /**
@@ -21,7 +21,7 @@ class BuildingPolicy
      */
     public function view(User $user, Building $building): bool
     {
-        return false;
+        return $user->isSuperAdmin() || ($user->canAccessTenant(Filament::getTenant()) && $user->hasPermission('view_building'));
     }
 
     /**
@@ -29,7 +29,7 @@ class BuildingPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->isSuperAdmin() || ($user->canAccessTenant(Filament::getTenant()) && $user->hasPermission('create_building'));
     }
 
     /**
@@ -37,7 +37,7 @@ class BuildingPolicy
      */
     public function update(User $user, Building $building): bool
     {
-        return false;
+        return $user->isSuperAdmin() || ($user->canAccessTenant(Filament::getTenant()) && $user->hasPermission('update_building'));
     }
 
     /**
@@ -45,7 +45,7 @@ class BuildingPolicy
      */
     public function delete(User $user, Building $building): bool
     {
-        return false;
+        return $user->isSuperAdmin() || ($user->canAccessTenant(Filament::getTenant()) && $user->hasPermission('delete_building'));
     }
 
     /**
@@ -53,7 +53,7 @@ class BuildingPolicy
      */
     public function restore(User $user, Building $building): bool
     {
-        return false;
+        return $user->isSuperAdmin() || ($user->canAccessTenant(Filament::getTenant()) && $user->hasPermission('restore_building'));
     }
 
     /**
@@ -61,6 +61,6 @@ class BuildingPolicy
      */
     public function forceDelete(User $user, Building $building): bool
     {
-        return false;
+        return $user->isSuperAdmin() || ($user->canAccessTenant(Filament::getTenant()) && $user->hasPermission('force_delete_building'));
     }
 }

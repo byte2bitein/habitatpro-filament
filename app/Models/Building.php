@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use App\Concerns\BelongsToTenant;
-use Illuminate\Database\Eloquent\Relations\Pivot;
+use App\Concerns\Blameable;
+use Illuminate\Database\Eloquent\Model;
 
-class Building extends Pivot
+class Building extends Model
 {
     use BelongsToTenant;
+    use Blameable;
 
     protected $fillable = [
         'name',

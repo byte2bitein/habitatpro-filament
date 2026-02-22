@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('building', function (Blueprint $table) {
+        Schema::create('buildings', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('code');
@@ -21,6 +21,12 @@ return new class extends Migration
             $table->timestamps();
             $table->unique(['tenant_id', 'name']);
             $table->index('tenant_id');
+
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
         });
     }
 
@@ -29,6 +35,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('buildings');
         Schema::dropIfExists('building');
     }
 };

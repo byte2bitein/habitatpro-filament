@@ -3,6 +3,7 @@
 namespace App\Concerns;
 
 use Filament\Facades\Filament;
+use Illuminate\Support\Facades\Auth;
 
 trait BelongsToTenant
 {
@@ -14,9 +15,12 @@ trait BelongsToTenant
     protected static function bootBelongsToTenant()
     {
         static::creating(function ($model) {
-            if (auth()->check() && !$model->tenant_id && !$model->isSuperAdmin()) {
+            // if (auth()->check() && !$model->tenant_id && !$model->isSuperAdmin()) {
+            //     $model->tenant_id = Filament::getTenant()->id;
+            //     $model->is_super_admin = false;
+            // }
+            if (Auth::check() && ! $model->tenant_id) {
                 $model->tenant_id = Filament::getTenant()->id;
-                $model->is_super_admin = false;
             }
         });
 

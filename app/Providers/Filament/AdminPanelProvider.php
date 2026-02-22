@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Settings;
+use App\Filament\Pages\Tenancy\EditTenantProfile;
 use App\Filament\Pages\Tenancy\RegisterTenant;
 use App\Http\Middleware\VerifyIsAdmin;
 use App\Models\Tenant;
@@ -57,7 +58,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
                 AccountWidget::class,
-                FilamentInfoWidget::class,
+                // FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -79,18 +80,19 @@ class AdminPanelProvider extends PanelProvider
                     ->label(label: 'Dashboard')
                     ->icon('heroicon-o-cog-6-tooth')
                     ->url('/')
-                    ->visible(fn() => auth()->user()->isSuperAdmin()),
+                    ->visible(fn () => auth()->user()->isSuperAdmin()),
             ])
             ->tenant(Tenant::class, slugAttribute: 'slug')
             ->tenantRegistration(RegisterTenant::class)
+            ->tenantProfile(EditTenantProfile::class)
             ->tenantMenuItems([
-                'register' => fn(Action $action) =>
-                    $action->visible(fn(?Tenant $tenant) => auth()->user()->isSuperAdmin()),
+                'register' => fn (Action $action) => $action->visible(fn (?Tenant $tenant) => auth()->user()->isSuperAdmin()),
+                'profile' => fn (Action $action) => $action->visible(fn (?Tenant $tenant) => auth()->user()->isSuperAdmin())
+                    ->label('Edit society information'),
             ])
             ->searchableTenantMenu()
             ->collapsibleNavigationGroups()
             ->sidebarCollapsibleOnDesktop(true)
-            ->databaseNotifications()
-        ;
+            ->databaseNotifications();
     }
 }

@@ -58,7 +58,7 @@ class AppPanelProvider extends PanelProvider
             // ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\Filament\App\Widgets')
             ->widgets([
                 AccountWidget::class,
-                FilamentInfoWidget::class,
+                // FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -79,7 +79,7 @@ class AppPanelProvider extends PanelProvider
                     ->label('Admin')
                     ->icon('heroicon-o-cog-6-tooth')
                     ->url('/admin')
-                    ->visible(fn() => auth()->user()->isSuperAdmin()),
+                    ->visible(fn () => auth()->user()->isSuperAdmin()),
             ])
             ->tenant(Tenant::class, slugAttribute: 'slug')
             // ->tenantRegistration(RegisterTenant::class)
@@ -90,7 +90,6 @@ class AppPanelProvider extends PanelProvider
             // ->searchableTenantMenu()
             ->collapsibleNavigationGroups()
             ->sidebarCollapsibleOnDesktop(true)
-            ->databaseNotifications()
-        ;
+            ->databaseNotifications();
     }
 }

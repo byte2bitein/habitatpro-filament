@@ -1,13 +1,13 @@
 <?php
 
-use App\Models\Team;
-use App\Models\User;
 use App\Enums\SocietyType;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('slug');
-            $table->string('address');
+            $table->string('address')->nullable();
             $table->decimal('longitude', 10, 8)->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->string('logo')->nullable();
@@ -26,12 +26,18 @@ return new class extends Migration {
             $table->string('contact_name')->nullable();
             $table->enum('society_type', SocietyType::cases())->default(SocietyType::RESIDENTIAL_APARTMENTS);
             $table->timestamps();
+
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
         });
 
         Schema::create('tenant_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(config('filament.tenancy.default_tenant_model'));
-            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(config('filament.tenancy.default_tenant_model'))->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

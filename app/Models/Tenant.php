@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Concerns\Blameable;
 use Illuminate\Database\Eloquent\Model;
 
 class Tenant extends Model
 {
+    use Blameable;
+
     protected $fillable = [
         'name',
         'slug',
@@ -23,7 +26,7 @@ class Tenant extends Model
     {
         return $this->belongsToMany(User::class);
     }
-    
+
     public function getSocietyTypeLabelAttribute()
     {
         return $this->society_type?->getLabel();
