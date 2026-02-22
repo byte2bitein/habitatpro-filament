@@ -18,18 +18,28 @@ class BuildingsTable
                     ->searchable(),
                 TextColumn::make('code')
                     ->searchable(),
-                TextColumn::make('tenant_id')
-                    ->numeric()
-                    ->sortable(),
+                // TextColumn::make('tenant_id')
+                //     ->numeric()
+                //     ->sortable(),
                 TextColumn::make('floors')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('created_at')
-                    ->dateTime()
+                    ->since()
+                    ->tooltip(fn ($record) => $record->created_at->format('Y-m-d H:i:s'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->since()
+                    ->tooltip(fn ($record) => $record->updated_at->format('Y-m-d H:i:s'))
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('creator.name')
+                    ->label('Created by')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updater.name')
+                    ->label('Updated by')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

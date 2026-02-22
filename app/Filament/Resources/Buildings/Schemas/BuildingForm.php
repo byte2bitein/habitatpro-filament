@@ -15,9 +15,6 @@ class BuildingForm
                     ->required(),
                 TextInput::make('code')
                     ->required(),
-                // TextInput::make('tenant_id')
-                //     ->required()
-                //     ->numeric(),
                 TextInput::make('floors')
                     ->required()
                     ->numeric(),

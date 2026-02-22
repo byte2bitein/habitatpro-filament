@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Activity extends Model
+{
+    protected $guarded = [];
+
+    protected $casts = ['properties' => 'array'];
+
+    public function subject()
+    {
+        return $this->morphTo();
+    }
+
+    public function causer()
+    {
+        return $this->morphTo();
+    }
+}
