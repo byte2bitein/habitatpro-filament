@@ -20,3 +20,11 @@ reset-run: migrate run;
 .PHONY: showroutes
 showroutes:
     php artisan route:list
+
+.PHONY: dockerup
+dockerup:
+	docker compose up -d
+
+.PHONY: dockerdown
+dockerdown:
+	docker compose down
