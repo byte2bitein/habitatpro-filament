@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('app_authentication_secret')->nullable();
             $table->text('app_authentication_recovery_codes')->nullable();
             $table->text('has_email_authentication')->nullable();
+            $table->string('phone_number')->nullable();
             // $table->boolean('is_tenant_admin')->default(false);
             $table->rememberToken();
             $table->timestamps();

@@ -21,6 +21,14 @@ class UserForm
                     ->label('Email address')
                     ->email()
                     ->required(),
+                TextInput::make('phone_number')
+                    ->required()
+                    ->prefix('+91')
+                    ->suffixIcon('heroicon-o-phone')
+                    ->numeric()
+                    ->mask('9999999999')
+                    ->maxLength(10)
+                    ->minLength(10),
                 // DateTimePicker::make('email_verified_at'),
                 TextInput::make('password')
                     ->password()
@@ -35,7 +43,7 @@ class UserForm
                 //     ->numeric(),
                 Toggle::make('is_super_admin')
                     ->required()
-                    ->visible(fn() => auth()->user()->isSuperAdmin()),
+                    ->visible(fn () => auth()->user()->isSuperAdmin()),
                 // Toggle::make('is_tenant_admin')
                 //     ->required()
                 //     ->default(false)

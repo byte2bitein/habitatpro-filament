@@ -44,6 +44,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         'password',
         'is_super_admin',
         'app_authentication_secret',
+        'phone_number',
         // 'is_tenant_admin',
     ];
 

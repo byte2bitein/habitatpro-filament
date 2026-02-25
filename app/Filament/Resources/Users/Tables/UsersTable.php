@@ -23,20 +23,17 @@ class UsersTable
                 TextColumn::make('email_verified_at')
                     ->dateTime()
                     ->sortable()
-                    ->visible(fn() => auth()->user()->isSuperAdmin()),
+                    ->visible(fn () => auth()->user()->isSuperAdmin()),
                 TextColumn::make('two_factor_confirmed_at')
                     ->dateTime()
                     ->sortable()
-                    ->visible(fn() => auth()->user()->isSuperAdmin()),
-                // TextColumn::make('tenant_id')
-                //     ->numeric()
-                //     ->sortable(),
+                    ->visible(fn () => auth()->user()->isSuperAdmin()),
+                TextColumn::make('phone_number')
+                    ->prefix('+91 ')
+                    ->copyable(),
                 IconColumn::make('is_super_admin')
                     ->boolean()
-                    ->visible(fn() => auth()->user()->isSuperAdmin()),
-                IconColumn::make('is_tenant_admin')
-                    ->boolean()
-                    ->visible(fn() => auth()->user()->isSuperAdmin()),
+                    ->visible(fn () => auth()->user()->isSuperAdmin()),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -51,12 +48,12 @@ class UsersTable
             ])
             ->recordActions([
                 EditAction::make()
-                    ->visible(fn($record) => auth()->user()->isSuperAdmin() || auth()->user()->can('update', $record)),
+                    ->visible(fn ($record) => auth()->user()->isSuperAdmin() || auth()->user()->can('update', $record)),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make()
-                        ->visible(fn($record) => auth()->user()->isSuperAdmin() || auth()->user()->can('delete', $record)),
+                        ->visible(fn ($record) => auth()->user()->isSuperAdmin() || auth()->user()->can('delete', $record)),
                 ]),
             ]);
     }

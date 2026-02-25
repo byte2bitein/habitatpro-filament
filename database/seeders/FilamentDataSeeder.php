@@ -64,6 +64,10 @@ class FilamentDataSeeder extends Seeder
     {
         return [
             ['name' => 'Society Admin', 'code' => 'society_admin'],
+            ['name' => 'Chairman/President', 'code' => 'chairman_president'],
+            ['name' => 'Secretary', 'code' => 'secretary'],
+            ['name' => 'Treasurer', 'code' => 'treasurer'],
+            ['name' => 'Committee Member', 'code' => 'committee_member'],
             ['name' => 'Manager', 'code' => 'manager'],
             ['name' => 'Owner', 'code' => 'owner'],
             ['name' => 'Tenant', 'code' => 'tenant'],
