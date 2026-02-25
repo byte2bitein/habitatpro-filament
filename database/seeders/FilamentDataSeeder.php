@@ -63,9 +63,12 @@ class FilamentDataSeeder extends Seeder
     public static function default_roles()
     {
         return [
-            ['name' => 'Admin', 'code' => 'admin'],
-            ['name' => 'Editor', 'code' => 'editor'],
-            ['name' => 'Viewer', 'code' => 'viewer'],
+            ['name' => 'Society Admin', 'code' => 'society_admin'],
+            ['name' => 'Manager', 'code' => 'manager'],
+            ['name' => 'Owner', 'code' => 'owner'],
+            ['name' => 'Tenant', 'code' => 'tenant'],
+            ['name' => 'Visitor', 'code' => 'visitor'],
+            ['name' => 'Staff', 'code' => 'staff'],
         ];
     }
 
@@ -105,7 +108,7 @@ class FilamentDataSeeder extends Seeder
     {
         return [
             [
-                'role' => 'admin',
+                'role' => 'society_admin',
                 'permissions' => [
                     'create_user',
                     'update_user',
@@ -124,13 +127,13 @@ class FilamentDataSeeder extends Seeder
                 ],
             ],
             [
-                'role' => 'editor',
+                'role' => 'manager',
                 'permissions' => [
                     'view_building',
                 ],
             ],
             [
-                'role' => 'viewer',
+                'role' => 'owner',
                 'permissions' => [
                     'view_user',
                     'view_building',

@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\UnitStatus;
 use App\Models\Building;
 use App\Models\Tenant;
 use App\Models\UnitType;
@@ -18,12 +19,17 @@ return new class extends Migration
             $table->id();
             $table->string('number');
             $table->integer('floor');
-            $table->foreignIdFor(UnitType::class);
+            $table->foreignIdFor(UnitType::class)->constrained()->restrictOnDelete();
             $table->foreignIdFor(Building::class)->constrained()->cascadeOnDelete();
-            $table->decimal('maintenance_rate', 10, 2);
+            $table->decimal('maintenance_rate', 12, 2);
             $table->foreignIdFor(Tenant::class)->constrained()->cascadeOnDelete();
+            $table->string('unit_status')->default(UnitStatus::VACANT->value);
             $table->unique(['building_id', 'number', 'tenant_id']);
             $table->timestamps();
+            $table->index('building_id');
+            $table->index('tenant_id');
+            $table->index('unit_type_id');
+            $table->softDeletes();
         });
     }
 

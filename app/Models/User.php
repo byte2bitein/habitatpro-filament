@@ -22,13 +22,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 
-
-class User extends Authenticatable implements FilamentUser, HasTenants, HasAppAuthentication, HasEmailAuthentication, MustVerifyEmail
+class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasEmailAuthentication, HasTenants, MustVerifyEmail
 {
+    use BelongsToTenant;
+
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
-
-    use BelongsToTenant;
 
     use InteractsWithAppAuthentication;
     use InteractsWithAppAuthenticationRecovery;
@@ -103,7 +102,7 @@ class User extends Authenticatable implements FilamentUser, HasTenants, HasAppAu
 
     public function roles(): BelongsToMany
     {
-        return $this->belongsToMany(Role::class, "user_role", "user_id", "role_id");
+        return $this->belongsToMany(Role::class, 'user_role', 'user_id', 'role_id');
     }
 
     public function hasPermission(string $permission): bool
@@ -116,6 +115,7 @@ class User extends Authenticatable implements FilamentUser, HasTenants, HasAppAu
             }
         }
         $has_permission = collect($permissionsArray)->unique()->contains($permission);
+
         return $has_permission;
     }
 
@@ -132,5 +132,35 @@ class User extends Authenticatable implements FilamentUser, HasTenants, HasAppAu
     public function hasVerifiedEmail()
     {
         return $this->email_verified_at !== null;
+    }
+
+    public function units()
+    {
+        return $this->belongsToMany(Unit::class)
+            ->withPivot([
+                'role',
+                'from_date',
+                'to_date',
+            ])->withTimestamps();
+    }
+
+    public function ownedUnits()
+    {
+        return $this->units()->wherePivot('role', 'owner');
+    }
+
+    public function rentedUnits()
+    {
+        return $this->units()->wherePivot('role', 'tenant');
+    }
+
+    public function activeOwnedUnits()
+    {
+        return $this->ownedUnits()->wherePivotNull('to_date')->wherePivot('from_date', '<=', now());
+    }
+
+    public function activeRentedUnits()
+    {
+        return $this->rentedUnits()->wherePivotNull('to_date')->wherePivot('from_date', '<=', now());
     }
 }
